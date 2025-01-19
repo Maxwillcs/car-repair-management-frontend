@@ -3,35 +3,7 @@
     <el-row :gutter="20">
       <el-col :sm="24" :lg="24">
         <blockquote class="text-warning" style="font-size: 14px">
-          领取阿里云通用云产品1888优惠券
-          <br />
-          <el-link
-            href="https://www.aliyun.com/minisite/goods?userCode=brki8iof"
-            type="primary"
-            target="_blank"
-            >https://www.aliyun.com/minisite/goods?userCode=brki8iof</el-link
-          >
-          <br />
-          领取腾讯云通用云产品2860优惠券
-          <br />
-          <el-link
-            href="https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console"
-            type="primary"
-            target="_blank"
-            >https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console</el-link
-          >
-          <br />
-          阿里云服务器折扣区
-          <el-link href="http://aly.ruoyi.vip" type="primary" target="_blank"
-            >>☛☛点我进入☚☚</el-link
-          >
-          &nbsp;&nbsp;&nbsp; 腾讯云服务器秒杀区
-          <el-link href="http://txy.ruoyi.vip" type="primary" target="_blank"
-            >>☛☛点我进入☚☚</el-link
-          ><br />
-          <h4 class="text-danger">
-            云产品通用红包，可叠加官网常规优惠使用。(仅限新用户)
-          </h4>
+          55210327 黄超 maxwill
         </blockquote>
 
         <hr />
@@ -39,9 +11,11 @@
     </el-row>
     <el-row :gutter="20">
       <el-col :sm="24" :lg="12" style="padding-left: 20px">
-        <h2>若依后台管理框架</h2>
+        <h2>基于WEB的XX汽车维修公司维修管理系统设计与实现</h2>
         <p>
-          一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。于是利用空闲休息时间开始自己写一套后台系统。如此有了若依管理系统，她可以用于所有的Web应用程序，如网站管理后台，网站会员中心，CMS，CRM，OA等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。
+          课题背景：近些年来，汽车的数量越来越多,XX汽车维修公司所维修的车辆，不仅是数量的增加，不同品牌、不同型号、油车、电车、油混车种类也越来越多，为提高服务质量和维修效率，需开发管理平台，实现全过程的规范管理。
+          具体内容：完成车辆从进入公司接管车辆开始，到维修结束将车辆交给客户的全过程管理。
+          基本要求：调研现有的同类管理平台，根据XX公司的实际情况，完成以上功能，满足公司维修业务的基本要求。
         </p>
         <p>
           <b>当前版本:</b> <span>v{{ version }}</span>
@@ -106,38 +80,13 @@
         <el-card class="update-log">
           <template v-slot:header>
             <div class="clearfix">
-              <span>联系信息</span>
+              <span>订单数据</span>
             </div>
           </template>
           <div class="body">
-            <p>
-              <i class="el-icon-s-promotion"></i> 官网：<el-link
-                href="http://www.ruoyi.vip"
-                target="_blank"
-                >http://www.ruoyi.vip</el-link
-              >
-            </p>
-            <p>
-              <i class="el-icon-user-solid"></i> QQ群：<s> 满937441 </s> <s> 满887144332 </s>
-              <s> 满180251782 </s> <s> 满104180207 </s> <s> 满186866453 </s> <s> 满201396349 </s>
-              <s> 满101456076 </s> <s> 满101539465 </s> <s> 满264312783 </s> <s> 满167385320 </s> 
-              <s> 满104748341 </s> <s> 满160110482 </s> <s> 满170801498 </s> <s> 满108482800 </s> 
-              <s> 满101046199 </s> <s> 满136919097 </s> <s> 满143961921 </s> <s> 满174951577 </s> 
-              <s> 满161281055 </s> <s> 满138988063 </s> <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=SUc-msaypcqB2UTFif4eqGlBHkKcvMNP&authKey=JdQBouY2PG%2BS%2BCzAfIgbCGNgxyahpfh24IW%2F03rPxGilhqVbisLma%2FFFnt79DHNh&noverify=0&group_code=151450850" target="_blank">151450850</a>
-            </p>
-            <p>
-              <i class="el-icon-chat-dot-round"></i> 微信：<a
-                href="javascript:;"
-                >/ *若依</a
-              >
-            </p>
-            <p>
-              <i class="el-icon-money"></i> 支付宝：<a
-                href="javascript:;"
-                class="支付宝信息"
-                >/ *若依</a
-              >
-            </p>
+            本月订单总数: {{ orderCount }}
+            <br />
+            本月总金额流水: {{ totalCount }}
           </div>
         </el-card>
       </el-col>
@@ -1019,11 +968,30 @@
 </template>
 
 <script setup name="Index">
-const version = ref('3.8.8')
+
+import request from "@/utils/request.js";
+
+const version = ref('1.0.0')
+
+const orderCount = ref(0)
+const totalCount = ref(0)
 
 function goTarget(url) {
   window.open(url, '__blank')
 }
+
+function getOrderData() {
+  request({
+    url: 'order/getOrderData',
+    method: 'get'
+  }).then((res) => {
+    console.log(res)
+    orderCount.value = res.orderCount
+    totalCount.value = res.totalCount
+  })
+}
+
+getOrderData()
 </script>
 
 <style scoped lang="scss">
