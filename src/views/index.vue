@@ -160,7 +160,7 @@ const appointments = ref([])
 
 function getAppointmentData() {
   request({
-    url: 'appointment/getAppointmentData',
+    url: 'biz/appointment/getAppointmentData',
     method: 'get',
   }).then((res) => {
     appointments.value = res.data
@@ -174,7 +174,7 @@ const pickUps = ref([])
 
 function getPickUpsData() {
   request({
-    url: 'repair/getPickUpData',
+    url: 'biz/repair/getPickUpData',
     method: 'get',
   }).then((res) => {
     console.log(res)
