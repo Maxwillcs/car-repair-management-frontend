@@ -144,7 +144,7 @@ const totalCount = ref(0)
 
 function getOrderData() {
   request({
-    url: 'order/getOrderData',
+    url: 'biz/order/getOrderData',
     method: 'get'
   }).then((res) => {
     orderCount.value = res.orderCount
