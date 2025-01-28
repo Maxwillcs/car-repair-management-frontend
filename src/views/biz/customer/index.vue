@@ -53,7 +53,7 @@
           plain
           icon="Plus"
           @click="handleAdd"
-          v-hasPermi="['biz:customers:add']"
+          v-hasPermi="['biz:customer:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,7 +63,7 @@
           icon="Edit"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['biz:customers:edit']"
+          v-hasPermi="['biz:customer:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -73,7 +73,7 @@
           icon="Delete"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['biz:customers:remove']"
+          v-hasPermi="['biz:customer:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -82,7 +82,7 @@
           plain
           icon="Download"
           @click="handleExport"
-          v-hasPermi="['biz:customers:export']"
+          v-hasPermi="['biz:customer:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
@@ -97,8 +97,8 @@
       <el-table-column label="客户等级" align="center" prop="customerLevel" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['biz:customers:edit']">修改</el-button>
-          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['biz:customers:remove']">删除</el-button>
+          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['biz:customer:edit']">修改</el-button>
+          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['biz:customer:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -148,7 +148,7 @@
 </template>
 
 <script setup name="Customers">
-import { listCustomers, getCustomers, delCustomers, addCustomers, updateCustomers } from "@/api/biz/customers";
+import { listCustomers, getCustomers, delCustomers, addCustomers, updateCustomers } from "@/api/biz/customer.js";
 
 const { proxy } = getCurrentInstance();
 
@@ -289,7 +289,7 @@ function handleDelete(row) {
 
 /** 导出按钮操作 */
 function handleExport() {
-  proxy.download('biz/customers/export', {
+  proxy.download('biz/customer/export', {
     ...queryParams.value
   }, `customers_${new Date().getTime()}.xlsx`)
 }

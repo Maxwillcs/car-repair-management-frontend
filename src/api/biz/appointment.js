@@ -1,44 +1,44 @@
 import request from '@/utils/request'
 
 // 查询客户管理列表
-export function listCustomers(query) {
+export function listAppointments(query) {
   return request({
-    url: '/biz/customers/list',
+    url: '/biz/appointment/list',
     method: 'get',
     params: query
   })
 }
 
 // 查询客户管理详细
-export function getCustomers(customerId) {
+export function getAppointments(appointmentId) {
   return request({
-    url: '/biz/customers/' + customerId,
+    url: '/biz/appointment/' + appointmentId,
     method: 'get'
   })
 }
 
 // 新增客户管理
-export function addCustomers(data) {
+export function addAppointments(data) {
   return request({
-    url: '/biz/customers',
+    url: '/biz/appointment',
     method: 'post',
     data: data
   })
 }
 
 // 修改客户管理
-export function updateCustomers(data) {
+export function updateAppointments(data) {
   return request({
-    url: '/biz/customers',
+    url: '/biz/appointment',
     method: 'put',
     data: data
   })
 }
 
 // 删除客户管理
-export function delCustomers(customerId) {
+export function delAppointments(appointmentId) {
   return request({
-    url: '/biz/customers/' + customerId,
+    url: '/biz/appointment/' + appointmentId,
     method: 'delete'
   })
 }
