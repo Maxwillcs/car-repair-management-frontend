@@ -33,6 +33,16 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="订单创建时间" prop="createTime" label-width="96px">
+        <el-date-picker
+            clearable
+            v-model="queryParams.createTime"
+            type="datetime"
+            value-format="YYYY-MM-DD HH:00:00"
+            placeholder="请选择订单创建时间(精确到小时)"
+            style="width: 280px;">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
@@ -99,6 +109,11 @@
 <!--        <span>-->
 <!--          {{ getOrderStatus(row.orderStatus) }}-->
 <!--        </span>-->
+        </template>
+      </el-table-column>
+      <el-table-column label="订单创建时间" align="center" prop="createTime" width="180">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -208,7 +223,8 @@ const data = reactive({
     amount: null,
     repairDemand: null,
     repairId: null,
-    orderStatus: null
+    orderStatus: null,
+    createTime: null
   },
   rules: {
     createTime: [

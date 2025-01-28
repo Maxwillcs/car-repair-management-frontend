@@ -34,11 +34,13 @@
         />
       </el-form-item>
       <el-form-item label="预计维修完成时间" prop="estimatedRepairCompleteTime" label-width="140px">
-        <el-date-picker clearable
+        <el-date-picker
+          clearable
           v-model="queryParams.estimatedRepairCompleteTime"
-          type="date"
-          value-format="YYYY-MM-DD"
-          placeholder="请选择预计维修完成时间">
+          type="datetime"
+          value-format="YYYY-MM-DD HH:00:00"
+          placeholder="请选择预计维修完成时间(精确到小时)"
+          style="width: 280px;">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -98,7 +100,7 @@
       <el-table-column label="维修进度" align="center" prop="repairProgress" />
       <el-table-column label="预计维修完成时间" align="center" prop="estimatedRepairCompleteTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.estimatedRepairCompleteTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.estimatedRepairCompleteTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

@@ -10,11 +10,12 @@
         />
       </el-form-item>
       <el-form-item label="变更时间" prop="changeTime">
-        <el-date-picker clearable
-                        v-model="queryParams.changeTime"
-                        type="date"
-                        value-format="YYYY-MM-DD"
-                        placeholder="选择变更时间">
+        <el-date-picker
+            clearable
+            v-model="queryParams.changeTime"
+            type="datetime"
+            value-format="YYYY-MM-DD HH:00:00"
+            placeholder="选择变更时间(精确到小时)">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="零件数量" prop="partQuantity">
@@ -79,7 +80,7 @@
       <el-table-column label="零件名" prop="partName" />
       <el-table-column label="变更时间" align="center" prop="changeTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.changeTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.changeTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="零件数量" align="center" prop="partQuantity" />

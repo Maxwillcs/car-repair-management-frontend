@@ -4,9 +4,9 @@
       <el-form-item label="预约时间" prop="appointmentTime">
         <el-date-picker clearable
           v-model="queryParams.appointmentTime"
-          type="date"
-          value-format="YYYY-MM-DD"
-          placeholder="请选择预约时间">
+          type="datetime"
+          value-format="YYYY-MM-DD HH:00:00"
+          placeholder="请选择预约时间(精确到小时)">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="客户手机号" prop="customerPhone" label-width="82px">
@@ -78,7 +78,7 @@
       <el-table-column label="预约id" align="center" prop="appointmentId" />
       <el-table-column label="预约时间" align="center" prop="appointmentTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.appointmentTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.appointmentTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="客户手机号" align="center" prop="customerPhone" />
