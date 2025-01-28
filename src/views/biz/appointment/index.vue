@@ -6,7 +6,8 @@
           v-model="queryParams.appointmentTime"
           type="datetime"
           value-format="YYYY-MM-DD HH:00:00"
-          placeholder="请选择预约时间(精确到小时)">
+          placeholder="请选择预约时间(精确到小时)"
+          style="width: 240px;">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="客户手机号" prop="customerPhone" label-width="82px">
@@ -105,9 +106,10 @@
         <el-form-item label="预约时间" prop="appointmentTime">
           <el-date-picker clearable
             v-model="form.appointmentTime"
-            type="date"
-            value-format="YYYY-MM-DD"
-            placeholder="请选择预约时间">
+            type="datetime"
+            value-format="YYYY-MM-DD HH:00:00"
+            placeholder="请选择预约时间(精确到小时)"
+            style="width: 240px;">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="客户手机号" prop="customerPhone" label-width="92px">

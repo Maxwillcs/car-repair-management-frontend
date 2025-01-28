@@ -105,9 +105,9 @@
         <el-form-item label="变更时间" prop="changeTime">
           <el-date-picker clearable
                           v-model="form.changeTime"
-                          type="date"
-                          value-format="YYYY-MM-DD"
-                          placeholder="选择变更时间">
+                          type="datetime"
+                          value-format="YYYY-MM-DD HH:00:00"
+                          placeholder="选择变更时间(精确到小时)">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="零件数量" prop="partQuantity">

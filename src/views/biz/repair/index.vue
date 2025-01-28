@@ -137,9 +137,10 @@
         <el-form-item label="预计维修完成时间" prop="estimatedRepairCompleteTime" label-width="147px">
           <el-date-picker clearable
             v-model="form.estimatedRepairCompleteTime"
-            type="date"
-            value-format="YYYY-MM-DD"
-            placeholder="请选择预计维修完成时间">
+            type="datetime"
+            value-format="YYYY-MM-DD HH:00:00"
+            placeholder="请选择预计维修完成时间(精确到小时)"
+            style="width: 280px;">
           </el-date-picker>
         </el-form-item>
       </el-form>
