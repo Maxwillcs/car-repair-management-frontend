@@ -42,3 +42,11 @@ export function delOrder(orderId) {
     method: 'delete'
   })
 }
+
+// 支付订单
+export function payOrder(orderId) {
+  return request({
+    url: '/biz/order/pay/' + orderId,
+    method: 'put'
+  })
+}

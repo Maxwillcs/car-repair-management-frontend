@@ -118,10 +118,11 @@
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="210">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['biz:order:edit']">修改</el-button>
           <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['biz:order:remove']">删除</el-button>
+          <el-button link type="primary" icon="Edit" @click="handlePay(scope.row)" v-hasPermi="['biz:order:pay']">支付</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -195,11 +196,23 @@
       </template>
     </el-dialog>
 
+    <!-- 支付弹窗对话框 -->
+    <el-dialog v-model="payDialogVisible" width="500px" title="支付订单">
+      <div style="text-align: center;">
+        <img :src="qrCodeUrl" alt="支付二维码" style="width: 200px; height: 200px; margin-bottom: 10px;" />
+        <p>请扫描二维码完成支付</p>
+      </div>
+      <template #footer>
+        <el-button @click="payDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmPayment">完成支付</el-button>
+      </template>
+    </el-dialog>
+
   </div>
 </template>
 
 <script setup name="Order">
-import { listOrder, getOrder, delOrder, addOrder, updateOrder } from "@/api/biz/order";
+import { listOrder, getOrder, delOrder, addOrder, updateOrder, payOrder } from "@/api/biz/order";
 
 const { proxy } = getCurrentInstance();
 
@@ -215,6 +228,9 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 const title = ref("");
+const payDialogVisible = ref(false);
+const qrCodeUrl = ref("");
+const currentOrderId = ref(0);
 
 const dateRange = ref([]);
 
@@ -370,7 +386,7 @@ function submitAddForm() {
     if (valid) {
       addOrder(addForm.value).then(response => {
         proxy.$modal.msgSuccess("新增成功");
-        open.value = false;
+        addOpen.value = false;
         getList();
       });
     }
@@ -382,7 +398,7 @@ function submitUpdateForm() {
     if (valid) {
       updateOrder(updateForm.value).then(response => {
         proxy.$modal.msgSuccess("修改成功");
-        open.value = false;
+        updateOpen.value = false;
         getList();
       });
     }
@@ -398,6 +414,20 @@ function handleDelete(row) {
     getList();
     proxy.$modal.msgSuccess("删除成功");
   }).catch(() => {});
+}
+
+function handlePay(row) {
+  currentOrderId.value = row.orderId;
+  payDialogVisible.value = true;
+  qrCodeUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${row.orderId}`; // 这里生成二维码
+}
+
+function confirmPayment() {
+    payOrder(currentOrderId.value).then(response => {
+      proxy.$modal.msgSuccess("支付成功");
+      payDialogVisible.value = false;
+      getList()
+    })
 }
 
 /** 维修管理序号 */
