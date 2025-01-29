@@ -2,12 +2,15 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="预约时间" prop="appointmentTime">
-        <el-date-picker clearable
-          v-model="queryParams.appointmentTime"
-          type="datetime"
-          value-format="YYYY-MM-DD HH:00:00"
-          placeholder="请选择预约时间(精确到小时)"
-          style="width: 240px;">
+        <el-date-picker
+            v-model="dateRange"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            clearable
+            @change="handleDateChange">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="客户手机号" prop="customerPhone" label-width="82px">
@@ -79,7 +82,7 @@
       <el-table-column label="预约id" align="center" prop="appointmentId" />
       <el-table-column label="预约时间" align="center" prop="appointmentTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.appointmentTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.appointmentTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="客户手机号" align="center" prop="customerPhone" />
@@ -107,8 +110,8 @@
           <el-date-picker clearable
             v-model="form.appointmentTime"
             type="datetime"
-            value-format="YYYY-MM-DD HH:00:00"
-            placeholder="请选择预约时间(精确到小时)"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            placeholder="请选择预约时间"
             style="width: 240px;">
           </el-date-picker>
         </el-form-item>
@@ -144,18 +147,33 @@ const multiple = ref(true);
 const total = ref(0);
 const title = ref("");
 
+const dateRange = ref([]);
+
+const handleDateChange = (val) => {
+  queryParams.value.startAppointmentTime = val ? val[0] : '';
+  queryParams.value.endAppointmentTime = val ? val[1] : '';
+};
+
+
 const data = reactive({
   form: {},
   queryParams: {
     pageNum: 1,
     pageSize: 10,
-    appointmentTime: null,
+    startAppointmentTime: null,
+    endAppointmentTime: null,
     customerPhone: null,
     followUpEmployee: null
   },
   rules: {
     createTime: [
       { required: true, message: "创建时间不能为空", trigger: "blur" }
+    ],
+    startAppointmentTime: [
+      { required: true, message: "开始时间不能为空", trigger: "blur" }
+    ],
+    endAppointmentTime: [
+      { required: true, message: "结束时间不能为空", trigger: "blur" }
     ],
     appointmentTime: [
       { required: true, message: "预约时间不能为空", trigger: "blur" }
@@ -192,7 +210,8 @@ function reset() {
   form.value = {
     appointmentId: null,
     createTime: null,
-    appointmentTime: null,
+    startAppointmentTime: null,
+    endAppointmentTime: null,
     customerPhone: null,
     followUpEmployee: null
   };

@@ -11,11 +11,14 @@
       </el-form-item>
       <el-form-item label="变更时间" prop="changeTime">
         <el-date-picker
+            v-model="dateRange"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            value-format="YYYY-MM-DD HH:mm:ss"
             clearable
-            v-model="queryParams.changeTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:00:00"
-            placeholder="选择变更时间(精确到小时)">
+            @change="handleDateChange">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="零件数量" prop="partQuantity">
@@ -80,7 +83,7 @@
       <el-table-column label="零件名" prop="partName" />
       <el-table-column label="变更时间" align="center" prop="changeTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.changeTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.changeTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="零件数量" align="center" prop="partQuantity" />
@@ -148,15 +151,22 @@ const title = ref("");
 const isExpandAll = ref(true);
 const refreshTable = ref(true);
 
+const dateRange = ref([]);
+
+const handleDateChange = (val) => {
+  queryParams.value.startTime = val ? val[0] : '';
+  queryParams.value.endTime = val ? val[1] : '';
+};
+
 const data = reactive({
   form: {},
   queryParams: {
     partName: null,
-    changeTime: null,
+    startTime: null,
+    endTime: null,
     partQuantity: null,
     parentId: null,
-    ancestors: null,
-    status: null
+    ancestors: null
   },
   rules: {
     partName: [
@@ -164,6 +174,12 @@ const data = reactive({
     ],
     changeTime: [
       { required: true, message: "变更时间不能为空", trigger: "blur" }
+    ],
+    startTime: [
+      { required: true, message: "开始时间不能为空", trigger: "blur" }
+    ],
+    endTime: [
+      { required: true, message: "结束时间不能为空", trigger: "blur" }
     ],
     partQuantity: [
       { required: true, message: "零件数量不能为空", trigger: "blur" }
@@ -212,7 +228,8 @@ function reset() {
   form.value = {
     partId: null,
     partName: null,
-    changeTime: null,
+    startTime: null,
+    endTime: null,
     partQuantity: null,
     parentId: null,
     ancestors: null,

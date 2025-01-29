@@ -94,7 +94,13 @@
       <el-table-column label="客户姓名" align="center" prop="customerName" />
       <el-table-column label="客户手机号" align="center" prop="customerPhone" />
       <el-table-column label="客户总消费" align="center" prop="totalSpending" />
-      <el-table-column label="客户等级" align="center" prop="customerLevel" />
+      <el-table-column label="客户等级" align="center" prop="customerLevel">
+        <template #header>
+          <el-tooltip content="0代表普通客户 1代表老客户 2代表VIP" placement="top">
+            <span>客户等级</span>
+          </el-tooltip>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['biz:customer:edit']">修改</el-button>

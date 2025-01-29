@@ -35,12 +35,14 @@
       </el-form-item>
       <el-form-item label="预计维修完成时间" prop="estimatedRepairCompleteTime" label-width="140px">
         <el-date-picker
-          clearable
-          v-model="queryParams.estimatedRepairCompleteTime"
-          type="datetime"
-          value-format="YYYY-MM-DD HH:00:00"
-          placeholder="请选择预计维修完成时间(精确到小时)"
-          style="width: 280px;">
+            v-model="dateRange"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            clearable
+            @change="handleDateChange">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -100,7 +102,7 @@
       <el-table-column label="维修进度" align="center" prop="repairProgress" />
       <el-table-column label="预计维修完成时间" align="center" prop="estimatedRepairCompleteTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.estimatedRepairCompleteTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.estimatedRepairCompleteTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -138,8 +140,8 @@
           <el-date-picker clearable
             v-model="form.estimatedRepairCompleteTime"
             type="datetime"
-            value-format="YYYY-MM-DD HH:00:00"
-            placeholder="请选择预计维修完成时间(精确到小时)"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            placeholder="请选择预计维修完成时间"
             style="width: 280px;">
           </el-date-picker>
         </el-form-item>
@@ -171,6 +173,13 @@ const multiple = ref(true);
 const total = ref(0);
 const title = ref("");
 
+const dateRange = ref([]);
+
+const handleDateChange = (val) => {
+  queryParams.value.startEstimatedRepairCompleteTime = val ? val[0] : '';
+  queryParams.value.endEstimatedRepairCompleteTime = val ? val[1] : '';
+};
+
 const data = reactive({
   form: {},
   queryParams: {
@@ -180,11 +189,18 @@ const data = reactive({
     repairEmployeeName: null,
     repairDiagnosis: null,
     repairProgress: null,
-    estimatedRepairCompleteTime: null
+    startEstimatedRepairCompleteTime: null,
+    endEstimatedRepairCompleteTime: null
   },
   rules: {
     createTime: [
       { required: true, message: "创建时间不能为空", trigger: "blur" }
+    ],
+    startEstimatedRepairCompleteTime: [
+      { required: true, message: "开始时间不能为空", trigger: "blur" }
+    ],
+    endEstimatedRepairCompleteTime: [
+      { required: true, message: "结束时间不能为空", trigger: "blur" }
     ],
     orderId: [
       { required: true, message: "订单id不能为空", trigger: "blur" }
@@ -228,7 +244,8 @@ function reset() {
     repairEmployeeName: null,
     repairDiagnosis: null,
     repairProgress: null,
-    estimatedRepairCompleteTime: null
+    startEstimatedRepairCompleteTime: null,
+    endEstimatedRepairCompleteTime: null
   };
   bizOrdersList.value = [];
   proxy.resetForm("repairRef");

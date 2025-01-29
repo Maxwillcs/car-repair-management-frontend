@@ -35,12 +35,14 @@
       </el-form-item>
       <el-form-item label="订单创建时间" prop="createTime" label-width="96px">
         <el-date-picker
+            v-model="dateRange"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            value-format="YYYY-MM-DD HH:mm:ss"
             clearable
-            v-model="queryParams.createTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:00:00"
-            placeholder="请选择订单创建时间(精确到小时)"
-            style="width: 280px;">
+            @change="handleDateChange">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -113,7 +115,7 @@
       </el-table-column>
       <el-table-column label="订单创建时间" align="center" prop="createTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -158,8 +160,8 @@
           <el-date-picker clearable
                           v-model="addForm.estimatedRepairCompleteTime"
                           type="datetime"
-                          value-format="YYYY-MM-DD HH:00:00"
-                          placeholder="选择预计维修完成时间(精确到小时)"
+                          value-format="YYYY-MM-DD HH:mm:ss"
+                          placeholder="选择预计维修完成时间"
                           style="width: 280px;">
           </el-date-picker>
         </el-form-item>
@@ -214,6 +216,13 @@ const multiple = ref(true);
 const total = ref(0);
 const title = ref("");
 
+const dateRange = ref([]);
+
+const handleDateChange = (val) => {
+  queryParams.value.startCreateTime = val ? val[0] : '';
+  queryParams.value.endCreateTime = val ? val[1] : '';
+};
+
 const data = reactive({
   updateForm: {},
   addForm: {},
@@ -225,11 +234,18 @@ const data = reactive({
     repairDemand: null,
     repairId: null,
     orderStatus: null,
-    createTime: null
+    startCreateTime: null,
+    endCreateTime: null
   },
   rules: {
     createTime: [
       { required: true, message: "创建时间不能为空", trigger: "blur" }
+    ],
+    startCreateTime: [
+      { required: true, message: "开始时间不能为空", trigger: "blur" }
+    ],
+    endCreateTime: [
+      { required: true, message: "结束时间不能为空", trigger: "blur" }
     ],
     customerPhone: [
       { required: true, message: "客户手机号不能为空", trigger: "blur" }
@@ -303,7 +319,8 @@ function addReset() {
     repairEmployeeName: null,
     repairDiagnosis: null,
     repairProgress: null,
-    estimatedRepairCompleteTime: null
+    startEstimatedRepairCompleteTime: null,
+    endEstimatedRepairCompleteTime: null
   };
   bizRepairsList.value = [];
   proxy.resetForm("addOrderRef");
