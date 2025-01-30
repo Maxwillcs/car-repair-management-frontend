@@ -28,14 +28,15 @@
             type="primary"
             icon="Cloudy"
             plain
-            @click="goTarget('https://gitee.com/y_project/RuoYi-Vue')"
-            >访问码云</el-button
+            @click="goTarget('https://github.com/Maxwillcs/car-repair-management-frontend')"
+            >访问前端仓库</el-button
           >
           <el-button
-            icon="HomeFilled"
-            plain
-            @click="goTarget('http://ruoyi.vip')"
-            >访问主页</el-button
+              type="primary"
+              icon="Cloudy"
+              plain
+              @click="goTarget('https://github.com/Maxwillcs/car-repair-management-backend')"
+          >访问后端仓库</el-button
           >
         </p>
       </el-col>
@@ -51,23 +52,21 @@
             <h4>后端技术</h4>
             <ul>
               <li>SpringBoot</li>
+              <li>Redis</li>
+              <li>MySQL</li>
+              <li>MyBatis</li>
               <li>Spring Security</li>
               <li>JWT</li>
-              <li>MyBatis</li>
-              <li>Druid</li>
-              <li>Fastjson</li>
               <li>...</li>
             </ul>
           </el-col>
           <el-col :span="6">
             <h4>前端技术</h4>
             <ul>
-              <li>Vue</li>
-              <li>Vuex</li>
-              <li>Element-ui</li>
+              <li>Vue3</li>
+              <li>Element-Plus</li>
+              <li>Vite</li>
               <li>Axios</li>
-              <li>Sass</li>
-              <li>Quill</li>
               <li>...</li>
             </ul>
           </el-col>
