@@ -42,7 +42,8 @@
             end-placeholder="结束时间"
             value-format="YYYY-MM-DD HH:mm:ss"
             clearable
-            @change="handleDateChange">
+            @change="handleDateChange"
+            @keyup.enter="handleQuery">
         </el-date-picker>
       </el-form-item>
       <el-form-item>

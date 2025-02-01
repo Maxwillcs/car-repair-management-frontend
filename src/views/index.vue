@@ -55,6 +55,7 @@
               <li>Redis</li>
               <li>MySQL</li>
               <li>MyBatis</li>
+              <li>Druid</li>
               <li>Spring Security</li>
               <li>JWT</li>
               <li>...</li>

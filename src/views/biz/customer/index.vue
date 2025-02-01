@@ -36,10 +36,12 @@
               v-model="queryParams.customerLevel"
               placeholder="请输入客户等级"
               clearable
+              maxlength="1"
               @keyup.enter="handleQuery"
           />
         </el-tooltip>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
@@ -139,6 +141,7 @@
             <el-input
                 v-model="form.customerLevel"
                 placeholder="请输入客户等级"
+                maxlength="1"
             />
           </el-tooltip>
         </el-form-item>
