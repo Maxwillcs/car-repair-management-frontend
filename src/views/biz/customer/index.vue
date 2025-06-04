@@ -192,7 +192,8 @@ const data = reactive({
       { required: true, message: "客户总消费不能为空", trigger: "blur" }
     ],
     customerLevel: [
-      { required: true, message: "客户等级 (0代表普通客户 1代表老客户 2代表VIP)不能为空", trigger: "blur" }
+      { required: true, message: "客户等级 (0代表普通客户 1代表老客户 2代表VIP)不能为空", trigger: "blur" },
+      { pattern: /^[012]$/, message: "客户等级只能为0、1或2", trigger: "blur" }
     ]
   }
 });

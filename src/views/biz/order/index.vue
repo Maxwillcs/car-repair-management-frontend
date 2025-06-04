@@ -189,7 +189,7 @@
           <el-input v-model="updateForm.repairDemand" placeholder="请输入维修需求" />
         </el-form-item>
         <el-form-item label="订单状态" prop="orderStatus" label-width="80px">
-          <el-input v-model="updateForm.orderStatus" placeholder="请输入订单状态" />
+          <el-input v-model="updateForm.orderStatus" placeholder="请输入订单状态" maxlength="1"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -274,7 +274,8 @@ const data = reactive({
       { required: true, message: "金额不能为空", trigger: "blur" }
     ],
     orderStatus: [
-      { required: true, message: "订单状态 (0代表维修中 1代表维修完成待支付 2代表支付完成)不能为空", trigger: "change" }
+      { required: true, message: "订单状态 (0代表维修中 1代表维修完成待支付 2代表支付完成)不能为空", trigger: "change" },
+      { pattern: /^[012]$/, message: "订单状态只能为0、1或2", trigger: "blur" }
     ],
     repairEmployeeName: [
       { required: true, message: "维修员工姓名不能为空", trigger: "blur" }
