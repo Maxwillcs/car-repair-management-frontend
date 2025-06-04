@@ -188,6 +188,9 @@
         <el-form-item label="维修需求" prop="repairDemand" label-width="80px">
           <el-input v-model="updateForm.repairDemand" placeholder="请输入维修需求" />
         </el-form-item>
+        <el-form-item label="订单状态" prop="orderStatus" label-width="80px">
+          <el-input v-model="updateForm.orderStatus" placeholder="请输入订单状态" />
+        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
